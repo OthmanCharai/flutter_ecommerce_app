@@ -26,14 +26,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         errors.add(error);
       });
   }
-
   void removeError({String? error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
       });
   }
-
   @override
   Widget build(BuildContext context) {
     return Form(
