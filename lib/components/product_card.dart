@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/components/shared/cubit.dart';
 import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/models/User.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 
 import '../constants.dart';
@@ -21,6 +23,32 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Favorite favorite = new Favorite(
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        quantity: product.quantity,
+        status: product.status,
+        userId: product.userId,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+        deletedAt: product.deletedAt,
+        price: product.price,
+        isPopulaire: product.isPopulaire,
+        pivot: Pivot(
+            userId: product.userId,
+            productId: product.id,
+            createdAt: null,
+            updatedAt: null));
+  
+    bool a = false;
+    AppCubit.favorites.forEach((element) {
+      if (element.pivot.productId == favorite.pivot.productId) {
+        a = true;
+
+      }
+    });
+    print(a);
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
@@ -73,14 +101,14 @@ class ProductCard extends StatelessWidget {
                       height: getProportionateScreenWidth(28),
                       width: getProportionateScreenWidth(28),
                       decoration: BoxDecoration(
-                        color: product.isFavourite
+                        color: a
                             ? kPrimaryColor.withOpacity(0.15)
                             : kSecondaryColor.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
-                        color: product.isFavourite
+                        color: a
                             ? Color(0xFFFF4848)
                             : Color(0xFFDBDEE4),
                       ),

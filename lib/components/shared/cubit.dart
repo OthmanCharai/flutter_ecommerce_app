@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 /*  */
 import 'package:shop_app/components/shared/appState.dart';
 import 'package:shop_app/components/shared/dio.dart';
+import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/models/User.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
@@ -27,7 +25,9 @@ class AppCubit extends Cubit<AppState> {
   bool isPasswword = true;
   final List<String?> errors = [];
   bool isVerfied = false;
-  late UserModel authUser;
+  late User authUser;
+  static List<Favorite> favorites = [];
+  static int user_id = 0;
 
   /*
   // Instance of AppCubit
@@ -58,17 +58,16 @@ class AppCubit extends Cubit<AppState> {
       print("hahahahahowa");
       print(value.data['data']['token']);
       tryToken(token: value.data['data']['token'], context: context);
-      print(value);
     }).catchError((onError) {
-           Fluttertoast.showToast(
-            msg: "Enter a valide User",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.SNACKBAR,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red[800],
-            textColor: Colors.white,
-            fontSize: 16.0);
-        emit(InvalideUser());
+      Fluttertoast.showToast(
+          msg: "Enter a valide User",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red[800],
+          textColor: Colors.white,
+          fontSize: 16.0);
+      emit(InvalideUser());
     });
 
     /*    LoginDio.userLogin(
@@ -97,8 +96,8 @@ class AppCubit extends Cubit<AppState> {
       return;
     }
     print("hada howa token ${token}");
-    LoginDio.getData(url: "api/v1/user", token: token).then((value) {
-      if (value.data['user']['email_verified_at'] == null) {
+    LoginDio.getUser(url: "api/v1/user", token: token).then((value) {
+      if (value.user.emailVerifiedAt == null) {
         Fluttertoast.showToast(
             msg: "please try to verifie your email",
             toastLength: Toast.LENGTH_SHORT,
@@ -110,19 +109,17 @@ class AppCubit extends Cubit<AppState> {
         emit(VerifyEmail());
         return;
       }
-      authUser = UserModel(
-        id: value.data['user']["id"],
-        image: value.data['user']["image"],
-        name: value.data['user']["name"],
-        token: token,
-        phone: value.data['user']["phone"],
-        products: value.data['product'],
-      );
+      authUser = value;
+      user_id = value.user.id;
+      favorites = value.favorites;
       print(" hada zmel${authUser}");
+      print(" hada zmel${favorites[0].name}");
+
       this.storeToken(token: token);
       print(value);
       Navigator.pushNamed(context, LoginSuccessScreen.routeName);
     }).catchError((onError) {
+      print(onError);
       Fluttertoast.showToast(
           msg: "Some Think was wrang please try again",
           toastLength: Toast.LENGTH_SHORT,
@@ -234,7 +231,7 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeCheckBox());
   }
 
-  /*
+  /*  
   // Logout Function
   */
   void logout({

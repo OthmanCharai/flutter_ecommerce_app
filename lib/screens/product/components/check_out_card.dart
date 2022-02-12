@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/screens/home/cubit/home_cubit.dart';
+import 'package:shop_app/screens/product/addProduct/add_product_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
+   CheckoutCard({
     Key? key,
+    required onPress,
   }) : super(key: key);
-
+  Function? onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +80,11 @@ class CheckoutCard extends StatelessWidget {
                 SizedBox(
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
-                    text: "Check Out",
-                    press: () {},
+                    text: "Add Product",
+                    press:(){
+                        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AddProduct()));
+                    },
                   ),
                 ),
               ],

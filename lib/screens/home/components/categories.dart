@@ -14,29 +14,29 @@ class Categories extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
-            return Padding(
-            padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection:Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:List.generate(
+        return Padding(
+          padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
                 cubit.categories.length,
-                  (index) => CategoryCard(
-                    icon: cubit.categories[index].image,
-                    text: cubit.categories[index].name,
-                    press: () {
-                      /*
+                (index) => CategoryCard(
+                  icon: cubit.categories[index].image,
+                  text: cubit.categories[index].name,
+                  press: () {
+                    /*
                       envoyer vers la liste des categories
                       */
-                    },
-                  ),
-                ), 
+                  },
+                ),
               ),
             ),
-          );
+          ),
+        );
       },
     );
   }
@@ -69,7 +69,7 @@ class CategoryCard extends StatelessWidget {
                 color: Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Image.network("https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"),
+              child: Image.network("${icon}"),
             ),
             SizedBox(height: 5),
             Text(text!, textAlign: TextAlign.center)

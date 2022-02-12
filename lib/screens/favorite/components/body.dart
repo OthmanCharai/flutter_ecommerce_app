@@ -20,16 +20,16 @@ class Body extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: ListView.builder(
-            itemCount: HomeCubit.cart.length,
+            itemCount: HomeCubit.userFavorite.length,
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                key: Key(HomeCubit.cart[index].price.toString()),
+                key: Key(HomeCubit.userFavorite[index].price.toString()),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  cubit.removeFromCart(
+                  cubit.removeFromFavorite(
                       user_id: HomeCubit.cart[index].id,
-                      cart_id: HomeCubit.cart[index].carts[index].id);
+                      product_id: HomeCubit.userFavorite[index].id);
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: CartCard(cart: HomeCubit.cart[index]),
+                child: CartCard(favorite:HomeCubit.userFavorite[index]),
               ),
             ),
           ),

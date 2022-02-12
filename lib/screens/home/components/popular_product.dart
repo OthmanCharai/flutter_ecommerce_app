@@ -28,12 +28,12 @@ class PopularProducts extends StatelessWidget {
               child: Row(
                 children: [
                   ...List.generate(
-                    cubit.products.length,
+                    HomeCubit.products.length,
+                    
                     (index) {
-                      print(" ana product jay mn populair${cubit.products[index].id}");
-                      print(" ana product jay mn populair${cubit.products[index].images.first.image}");
+                    
 
-                      return ProductCard(product: cubit.products[index]);
+                      return ProductCard(product: HomeCubit.products[index]);
                     },
                   ),
                   SizedBox(width: getProportionateScreenWidth(20)),

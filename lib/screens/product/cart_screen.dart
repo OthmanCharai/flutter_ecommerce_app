@@ -9,27 +9,28 @@ import 'package:shop_app/screens/home/cubit/home_state.dart';
 import 'components/body.dart';
 import 'components/check_out_card.dart';
 
-class CartScreen extends StatelessWidget {
-  static String routeName = "/cart";
+class ProductScreen extends StatelessWidget {
+  static String routeName = "/product";
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) =>
-          HomeCubit()..getCart(user_id: AppCubit.user_id),
+          HomeCubit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = HomeCubit.get(context);
-          print("hahahahah ha ana ${HomeCubit.cart.length}");
           return ConditionalBuilder(
             builder: (BuildContext context) {
               return Scaffold(
-                appBar: buildAppBar(context, HomeCubit.cart.length),
+                appBar: buildAppBar(context, HomeCubit.userProduct.length),
                 body: Body(),
-                bottomNavigationBar: CheckoutCard(),
+                bottomNavigationBar: CheckoutCard(onPress:(){
+                  
+                }),
               );
             },
-            condition: HomeCubit.cart.length > 0,
+            condition: true,
             fallback: (context) => Center(child: CircularProgressIndicator()),
           );
         },
@@ -42,11 +43,11 @@ class CartScreen extends StatelessWidget {
       title: Column(
         children: [
           Text(
-            "Your Cart",
+            "Your Product",
             style: TextStyle(color: Colors.black),
           ),
           Text(
-            "${cart} items",
+            "${cart} Product",
             style: Theme.of(context).textTheme.caption,
           ),
         ],

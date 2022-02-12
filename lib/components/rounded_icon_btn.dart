@@ -12,7 +12,7 @@ class RoundedIconBtn extends StatelessWidget {
   }) : super(key: key);
 
   final IconData icon;
-  final GestureTapCancelCallback press;
+  final Function()? press;
   final bool showShadow;
 
   @override

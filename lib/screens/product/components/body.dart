@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shop_app/components/shared/cubit.dart';
 import 'package:shop_app/models/Cart.dart';
 import 'package:shop_app/screens/home/cubit/home_cubit.dart';
 import 'package:shop_app/screens/home/cubit/home_state.dart';
@@ -14,22 +15,23 @@ class Body extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) => {},
       builder: (context, state) {
-        print("ahahahahahhhahahahahah00");
         var cubit = HomeCubit.get(context);
         return Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: ListView.builder(
-            itemCount: HomeCubit.cart.length,
+            itemCount: HomeCubit.userProduct.length,
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                key: Key(HomeCubit.cart[index].price.toString()),
+                key: UniqueKey(),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  cubit.removeFromCart(
-                      user_id: HomeCubit.cart[index].id,
-                      cart_id: HomeCubit.cart[index].carts[index].id);
+                  print("ha hahah");
+                  print(HomeCubit.userProduct[index].id);
+                  cubit.removeFromProduct(
+                      product_id: HomeCubit.userProduct[index].id);
+                  cubit.getUserProduct(user_id: AppCubit.user_id);
                 },
                 background: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -44,7 +46,7 @@ class Body extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: CartCard(cart: HomeCubit.cart[index]),
+                child: CartCard(product: HomeCubit.userProduct[index]),
               ),
             ),
           ),

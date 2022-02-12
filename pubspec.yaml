@@ -37,7 +37,11 @@ dependencies:
   fl_chart: ^0.40.6
   data_table_2: ^2.2.0
   google_fonts: ^2.1.1
- 
+  conditional_builder: ^1.0.2
+  hexcolor: ^1.0.4
+  image_picker: ^0.8.4+8
+
+
 
 
 dev_dependencies:

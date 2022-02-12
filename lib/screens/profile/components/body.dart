@@ -4,6 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/components/shared/appState.dart';
 import 'package:shop_app/components/shared/cubit.dart';
 import 'package:shop_app/controllers/MenuController.dart';
+import 'package:shop_app/models/User.dart';
+import 'package:shop_app/screens/cart/cart_screen.dart';
+import 'package:shop_app/screens/favorite/cart_screen.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/main/main_screen.dart';
 
 import 'profile_menu.dart';
@@ -25,33 +29,27 @@ class Body extends StatelessWidget {
                 ProfilePic(),
                 SizedBox(height: 20),
                 ProfileMenu(
-                  text: "My Account",
-                  icon: "assets/icons/User Icon.svg",
-                  press: () => {},
-                ),
-                ProfileMenu(
-                  text: "Notifications",
-                  icon: "assets/icons/Bell.svg",
-                  press: () {},
-                ),
-                ProfileMenu(
-                  text: "Dashboard",
-                  icon: "assets/icons/menu_store.svg",
+                  text: "Home",
+                  icon: "assets/icons/Shop Icon.svg",
                   press: () {
-                     MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (context) => MenuController(),
-                        ),
-                      ],
-                      child: MainScreen(),
-                    ); 
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                  },
+                ),
+             
+                ProfileMenu(
+                  text: "Favorite",
+                  icon: "assets/icons/Heart Icon.svg",
+                  press: () {
+                    Navigator.pushNamed(context, FavoriteScreen.routeName);
+                     
                   },
                 ),
                 ProfileMenu(
-                  text: "Help Center",
-                  icon: "assets/icons/Question mark.svg",
-                  press: () {},
+                  text: "Cart",
+                  icon: "assets/icons/Cart Icon.svg",
+                  press: () {
+                    Navigator.pushNamed(context, CartScreen.routeName);
+                  },
                 ),
                 ProfileMenu(
                   text: "Log Out",
